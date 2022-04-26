@@ -1,5 +1,4 @@
 import re
-# from pprint import pprint
 
 
 class ResultParser():
@@ -23,10 +22,6 @@ class ResultParser():
             }
             results['suite'][suite['name']] = suite_result
 
-        # pprint("-#### Suites-------------------------------------------")
-        # pprint(results)
-        # pprint("-------------------------------------------------------")
-
         # Parse Tests
         for test in self.test_list:
             test_result = {
@@ -37,10 +32,6 @@ class ResultParser():
             }
             results['suite'][test['suite']]['tests'].append(test_result)
 
-        # pprint("-#### Tests-------------------------------------------")
-        # pprint(results)
-        # pprint("-------------------------------------------------------")
-
         # Parse Keywords
         for keyword in self.keyword_list:
             # Split the originating test id from keyword['id']
@@ -50,10 +41,6 @@ class ResultParser():
             # Capture Failure Messages
             for content in keyword['body']:
                 failure_message = content.message
-                # if content.level in ["ERROR", "FAIL"]:
-                #     failure_message = content.message
-                # else:
-                #     failure_message = None
 
             keyword_result = {
                 "testid": test_id,
@@ -68,9 +55,5 @@ class ResultParser():
                 for test in results['suite'][suite]['tests']:
                     if test_id == test['id']:
                         test['keywords'].append(keyword_result)
-
-        # pprint("-#### Keywords-------------------------------------------")
-        # pprint(results)
-        # pprint("-------------------------------------------------------")
 
         return results
